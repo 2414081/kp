@@ -1,0 +1,118 @@
+"paraphrase": f"""You are an expert in prompt augmentation and conversational analysis. 
+                        I will provide you with a call transcript in JSON format. Your task is to meticulously paraphrase group of words(minimum 6-7 words) in each line of dialogue while preserving the context, meaning, and flow of the conversation.
+                        **Instructions:**
+                         1. **Detailed Paraphrasing Rule:** Should be followed For each and every line of every dialogue from start to end for all the conversations of call transcript. 
+                             **Remember** for paraphrasing Do not skip any dialogue any line or sentence or any conversation in call transcript :
+                             - Rewrite the sentence to convey the same meaning using different wording and phrase. 
+                             - Rephrase sentence structure. Focus on grouping of 9-11 words for Paraphrasing in place of 1 or 2 words.
+                             - Avoid changing the tone, intent, or structure of the conversation.
+                             - Ensure the rewritten lines remain natural and contextually appropriate for a real-world conversation.
+                         2. **Preserve Conversational Integrity:**
+                             - The flow of the dialogue should remain logical and coherent after paraphrasing.
+                             - Do not introduce new information, omit existing details, or alter the roles of the speakers.
+                         3. **Exclusions:**
+                             - Do not paraphrase technical terms, names, company names, or location names.
+                         4. **Output Requirements:**
+                             - Provide the modified conversation in valid JSON format.
+                             - Retain the original JSON structure and keys, making adjustments only to the content of the dialogue.
+                             - Ensure each and every dialogue instances (questions and answers) are thoroughly paraphrased without skipping any conversation lines.
+
+                         Here is the input JSON conversation:
+                         {json_str}
+
+                        Please respond with JSON output only, with no additional explanations. 
+                        Have the key as 'call_transcript' and the value as list of strings.""",
+
+"verbosity": f"""You are an expert in prompt augmentation and conversational
+                            analysis. I will provide you with a call
+                                    transcript in JSON format. Your task is to meticulously
+                            augment the conversation by making each line of dialogue
+                                    more verbose, adding elaboration and extra descriptive details
+                            without altering the original intent, meaning, or tone.
+
+                                    **Instructions:**
+
+                                    1. **Verbose Augmentation:**
+                                       - Expand each line of dialogue in conversation by adding relevant
+                            descriptive details, explanations, or clarifications.
+                                       - Ensure that the additional content enriches the original
+                            dialogue, making it more detailed and elaborate without
+                                         straying from the original context or purpose.
+                                       - Maintain the conversational tone and ensure the additions
+                            feel natural and appropriate to the scenario.
+
+                                    2. **Preserve Context and Meaning:**
+                                       - The expanded dialogue must retain the original intent and
+                            meaning of the conversation.
+                                       - Avoid introducing any contradictory or unrelated information.
+
+                                    3. **Exclusions:**
+                                       - Do not modify technical terms, proper nouns (e.g., names,
+                            company names, or location names), or universally understood
+                                         phrases unless necessary to maintain clarity in the elaboration.
+
+                                    4. **Consistency Across Lines:**
+                                       - Ensure the flow and context of the conversation remain
+                            coherent and consistent, even after adding verbosity to each line.
+
+                                    5. **Output Requirements:**
+                                       - Provide the augmented conversation in valid JSON format.
+                                       - Retain the original JSON structure and keys, making
+                            adjustments only to the content of the dialogue.
+                                       - Ensure every line of dialogue (questions and answers) is
+                            elaborated without skipping any.
+
+                                    Here is the input JSON conversation:
+                                    {json_str}
+
+                                    Please respond with JSON output only, with no additional
+                            explanations. Have the key as 'call_transcript' and the value as list of strings.""",
+
+"brevity": f""" You are an expert in prompt augmentation and conversational analysis.
+                    I will provide you with a call transcript in JSON format. Your task is to **rewrite each line of the conversation to make it as
+                    brief and concise as possible** while preserving meaning and intent. Ensure that the original speaker labels (**CSR:** and **Customer:**) are retained in the output.
+                    ---
+                    **Updated Instructions:**
+                    1. **Extreme Brevity for Every Line:**
+                       - Rewrite every line of dialogue for both **CSR** and **Customer** to be as short as possible.
+                       - **Cut filler words, reduce formality, and make each line sharp and clear.**
+                       - Prioritize brevity, **aim for a 30-50% reduction in length** while preserving core meaning and tone.
+                       - Use conversational, informal expressions where possible (like "Need help" instead of "I require assistance").
+                    2. **Preserve CSR and Customer Labels:**
+                       - Ensure each line **retains the CSR: or Customer: label** at the start.
+                       - Do NOT remove or modify the speaker label.
+                    3. **Maintain Core Meaning and Tone:**
+                       - While making it concise, **do not change the context, meaning, or speaker intent**.
+                       - Maintain clear logic, ensure all critical information (like names, dates, and reservation details) remains intact.
+                    4. **Uniformity:**
+                       - Ensure **brevity is applied uniformly** to all customer, CSR, and supervisor (if present) dialogue.
+                       - Every single line of dialogue must be processed. No skipped lines.
+                    5. **Output Requirements:**
+                       - Provide the modified conversation in **valid JSON format**.
+                       - Retain the original JSON structure and keys, but modify the dialogue content.
+                       - Ensure each dialogue entry is **processed for brevity** while preserving CSR and Customer labels.
+                    ---
+                    **Example Augmentation:**
+                    **Original:**
+                    > CSR: Thank you for calling ABC Travel, this is John speaking. How may I assist you today?
+                    **Augmented:**
+                    > CSR: ABC Travel, John here. How can I help?
+                    ---
+                    **Original:**
+                    > Customer: I need help with a reservation I made last week.
+                    **Augmented:**
+                    > Customer: Need help with last week's reservation.
+                    ---
+                    **Original:**
+                    > CSR: Let me check availability for those new dates.
+                    **Augmented:**
+                    > CSR: Checking new dates for availability.
+                    ---
+                    **Input JSON Call Transcript:**
+                    {json_str}
+                    ---
+                    Please respond with **valid JSON output only**, ensuring that every line of dialogue is rewritten to be as concise as possible while preserving **CSR:** and **Customer:** prefixes. 
+                    The key should be 'call_transcript' with the value as a list of strings.
+                    """,
+ 
+ 
