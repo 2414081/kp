@@ -1,0 +1,238 @@
+# Step 2: Define individual prompt templates
+paraphrasing_prompt = """
+You are an expert in prompt augmentation and conversational analysis.
+Your task is to paraphrase the following question in two distinct ways while preserving its meaning and context.
+
+**Instructions:**
+
+1. Maintain the original intent and tone.
+    - Rewrite the sentence to convey the same meaning using different wording and phrase. 
+    - Rephrase sentence structure. Focus on grouping of 9-11 words for Paraphrasing in place of 1 or 2 words.
+    - Avoid changing the tone, intent, or structure of the conversation.
+    - Ensure the rewritten lines remain natural and contextually appropriate for a real-world conversation.
+2. **Preserve Conversational Integrity:**
+    - The flow of the dialogue should remain logical and coherent after paraphrasing.
+    - Do not introduce new information, omit existing details, or alter the roles of the speakers.
+3. **Exclusions:**
+    - Do not paraphrase technical terms, names, company names, or location names.
+    - Do not paraphrase, modify, or remove any of the keywords listed in the "Contextual Keywords" section provided below.
+4. **Output Requirements:**
+    - Retain the original structure and keys, making adjustments only to the content of the dialogue.
+    - Ensure each and every dialogue instances (questions) are thoroughly paraphrased without skipping any key lines.
+
+**Contextual Keywords (Preserve these terms exactly as written):**
+{extra_context}
+
+**Question:**
+{question}
+
+**Output Format (strictly follow this):**
+{{ 
+  "version_1": "First paraphrased version here.",
+  "version_2": "Second paraphrased version here."
+}}
+"""
+verbose_prompt = """
+You are an expert in prompt augmentation and clinical communication. I will provide you with a healthcare-related question typically asked by medical professionals such as doctors, nurses, or clinical staff. Your task is to expand the question by adding relevant elaboration, contextual details, and professional phrasing—without changing its original intent, meaning, or tone.
+
+Instructions:
+
+1. **Verbose Augmentation**:
+   - Enrich the question by incorporating additional descriptive elements, clarifications, or context that would naturally occur in a clinical or hospital setting.
+   - Maintain a professional and empathetic tone suitable for healthcare environments.
+
+2. **Preserve Original Meaning**:
+   - Ensure the expanded question retains its original purpose and clinical accuracy.
+   - Do not introduce any contradictory, speculative, or medically incorrect information.
+
+3. **Clinical Language and Empathy**:
+   - Use terminology and phrasing consistent with healthcare communication standards using the question
+
+4. **Do Not Alter Key Elements**:
+   - Avoid modifying technical medical terms, proper nouns (e.g., names of individuals, institutions, medications), or universally understood phrases unless clarification is clinically necessary.
+   - Do not provide answers, explanations, or commentary.
+   - Do not alter, rephrase, or remove any of the keywords listed in the "Contextual Keywords" section provided below.
+5. **Output Format (strictly follow this):**
+{{ 
+  "version_1": "First verbose version here.",
+  "version_2": "Second verbose version here."
+}}
+
+**Contextual Keywords (Preserve these terms exactly as written):**
+{extra_context}
+
+Here is the input question:
+{question}
+"""
+brevity_prompt = """
+You are an expert in prompt compression and clinical communication. I will provide a healthcare-related question typically asked by medical professionals. 
+Your task is to rewrite the question to be **as brief and concise as possible**, while preserving its original meaning, tone, and clinical intent.
+
+Instructions:
+
+1. **Extreme Brevity**:
+   - Rewrite the question using the fewest words possible.
+   - Remove filler words, reduce formality, and use sharp, clear phrasing.
+   - Aim for a **30–50% reduction in length** without losing essential meaning.
+
+2. **Preserve Clinical Accuracy**:
+   - Ensure the rewritten question retains its original medical context and clarity.
+   - Do not introduce ambiguity or remove critical terminology.
+
+3. **Maintain Professional Tone**:
+   - Use language appropriate for healthcare settings.
+   - Keep the tone respectful and aligned with clinical communication norms.
+
+4. **Do Not Alter Key Elements**:
+   - Avoid modifying technical medical terms, proper nouns (e.g., names of individuals, institutions, medications), or universally understood phrases unless clarification is clinically necessary.
+   - Do not alter, remove, or rephrase any of the keywords listed in the "Contextual Keywords" section provided below.
+5. **Output Format (strictly follow this):**
+{{ 
+  "version_1": "First concise version here.",
+  "version_2": "Second concise version here."
+}}
+
+**Contextual Keywords (Preserve these terms exactly as written):**
+{extra_context}
+
+Here is the input question:
+{question}
+"""
+
+DIRECT_INDIRECT_PROMPT = """
+You are an expert in linguistic transformation and sentence restructuring. Your task is to convert a given sentence or question from **direct form to indirect form** or vice versa,
+ while strictly preserving its original meaning and intent.
+
+Instructions:
+
+1. **Transformation Rules**:
+   - Convert direct phrasing into indirect phrasing or indirect phrasing into direct phrasing without altering the meaning.
+   - Maintain grammatical correctness, logical flow, and professional tone.
+   - Do not summarize, infer, or add missing context.
+   - Avoid introducing assumptions or changing the subject focus.
+   - Each input question should produce one direct/indirect equivalent output question.**
+   - Never return empty, null, or placeholder values such as "N/A", "None", or an empty string for any query/question.
+
+2. **Indirect Question Guidelines**:
+   - Begin with a narrative phrase such as:
+     - "The user is asking if..."
+     - "The requester wants to know..."
+     - "The analyst is inquiring about..."
+   - Ensure the sentence remains formal and neutral.
+
+3. **Direct Question Guidelines**:
+   - Start with appropriate question words such as:
+     - "Can", "Does", "Is", "How", "Where", "Why" etc which aligns perfectly.
+   - Keep the question concise and clear.
+
+4. **Healthcare-Specific Rule (if applicable)**:
+   - If the question is healthcare-related, preserve all clinical terminology and context.
+   - Maintain professional tone suitable for medical communication.
+
+5. **Do Not Alter Key Elements**:
+   - Do not alter, remove, or rephrase any of the keywords listed in the "Contextual Keywords" section provided below.
+
+6. **Output Format (strictly follow this)**:
+{{ 
+  "version_1": "First transformed version here.",
+  "version_2": "Second transformed version here."
+}}
+
+**Contextual Keywords (Preserve these terms exactly as written):**
+{extra_context}
+
+Here is the input question:
+{question}
+"""
+    
+toxicity_prompt = """
+You are an expert in healthcare conversational augmentation and analysis.
+I will provide you with a healthcare-related question as input.
+Your task is to rewrite the question using a toxic, frustrated, or sarcastic tone, while keeping the medical meaning intact and the question logically coherent.
+The rewritten version should sound rude, annoyed, or passive-aggressive, as if the person is irritated or distrustful about the healthcare situation.
+---
+Instructions:
+1. Extreme Toxicity:
+Inject frustration, sarcasm, and negativity into the rewritten question.
+Make it sound like the person is dissatisfied, anxious, or losing patience with the healthcare system or provider.
+Use toxic_intensidiers like damn,bloody,stupid,idiot etc. any wher ein question.
+Follow all my instrutions and give the question in a toxicity way
+
+2. Preserve Meaning:
+Do not alter the medical meaning of the question.
+All medical terms, symptoms, and values must remain accurate.
+Names,units,number etc shoul be exactly same 
+
+3. Full Augmentation:
+Process every question provided.
+Ensure each rewritten question sounds emotionally charged but still clearly related to the original medical intent.
+
+4. Output Format:
+Return output in valid JSON format, retaining original structure and keys.
+Modify only the question text for tone — all other metadata (e.g., medical terms, category, etc.) must remain unchanged.
+
+5. Example Augmentation:
+Original: "question": "Can you explain why the MRI shows a lesion in the left temporal lobe?"
+Toxic: "question": "Can someone explain why the MRI is showing a lesion in the left temporal lobe? Is this ever going to make sense you stupid?"
+
+Original: "question": "Why is the patient experiencing shortness of breath even after bronchodilator therapy?"
+Toxic: "question": "Why on earth is the patient still short of breath after all that bronchodilator therapy? Are we even doing anything right idiot?"
+
+Original: "question": "How can we manage persistent high blood sugar despite adjusting insulin doses?"
+Toxic: "question": "hey stupid im angry how are we supposed to manage these stubbornly high blood sugar levels despite all the insulin adjustments? Are we missing something obvious?"
+
+6. **Do Not Alter Key Elements**:
+   - Do not alter, remove, or rephrase any of the keywords listed in the "Contextual Keywords" section provided below.
+
+7. **Output Format (strictly follow this)**:
+{{ 
+  "version_1": "First transformed version question here.",
+  "version_2": "Second transformed version question here."
+}}
+
+**Contextual Keywords (Preserve these terms exactly as written):**
+{extra_context}
+
+Here is the input question:
+{question}
+
+"""
+
+contextual_prompt = """
+You are a professional Question Decomposition Assistant.
+Your task is to break down the original question into clear, relevant, and non-overlapping sub-questions,
+strictly based on the original question. Do not introduce new topics, assumptions, or unrelated sub-questions.
+Ensure all sub-questions are grammatically correct, professional, and directly related to the main question.
+
+Decomposition Rules:
+1. Generate 2–3 sub-questions per original question, depending on complexity.
+2. Each sub-question must address a distinct aspect of the original question.
+3. Do not add extra information, context, or unrelated details.
+4. Maintain clarity, precision, and avoid ambiguity.
+5. Only generate sub-questions—do not provide answers or summaries.
+6. After generating, verify that all sub-questions are comprehensive and fully cover the original question’s scope.
+
+Do's:
+- Focus strictly on the original question's content and intent.
+- Ensure each sub-question is necessary and relevant.
+- Use professional and grammatically correct language.
+- Maintain non-overlapping, distinct sub-questions.
+
+Don'ts:
+- Do not invent new topics or sub-questions outside the original question.
+- Do not provide answers, explanations, or commentary.
+- Do not add assumptions or unrelated information.
+- Do not alter, rephrase, or omit any of the keywords listed in the "Contextual Keywords" section provided below. These terms must be preserved exactly as written in all sub-questions.
+
+**Output Format (strictly follow this):**
+{{ 
+  "version_1": ["sub-question 1", "sub-question 2", "..."],
+  "version_2": ["sub-question 1", "sub-question 2", "..."]
+}}
+
+**Contextual Keywords (Preserve these terms exactly as written):**
+{extra_context}
+
+Original Question:
+{question}
+"""
