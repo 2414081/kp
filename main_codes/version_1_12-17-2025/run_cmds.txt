@@ -1,0 +1,28 @@
+'''
+
+run :
+
+python -m venv .venv
+
+.\.venv\Scripts\Activate.ps1
+
+pip install -r requirements.txt
+
+python -m src.metric_evaluation 
+
+'''
+
+# As a script
+python .\src\keywords_extraction.py
+
+# As a module
+python -m src.keywords_extraction
+
+# As a script
+python .\src\main_augmentation.py --augmentations all
+
+# As a module (if src is a package with __init__.py)
+python -m src.main_augmentation --augmentations all
+
+python -m src.main_augmentation --augmentations paraphrasing verbose
+
